@@ -1,0 +1,92 @@
+Let's break down the implementation of this Tic-Tac-Toe game by analyzing the provided code and matching it to the UI requirements. Below is the step-by-step reasoning behind the implementation.
+
+Step-by-Step Reasoning
+1. HTML Structure
+Container: The main container (div.game) is used to center the game on the page. It has fixed dimensions (600x600px) and is positioned absolutely at the center using top: 50%, left: 50%, and negative margins.
+Header Section:
+A logo (a.neave) on the top-left links to https://neave.com/. It contains an SVG for the "N" logo and a disc for hover animation.
+A mute/unmute button (div.mute) on the top-right uses an SVG speaker icon to toggle audio.
+Game Grid:
+A 3x3 grid (div.board) is created using floated div.square elements (each 33.333% width and height).
+Each cell is clickable (via tabindex="0") and can display 'X' or 'O' inside a nested div. Classes like top, left, right, and bottom help style the grid lines.
+A div.restart overlay covers the grid to handle restarts after a game ends.
+Scoreboard:
+A div.scores section below the grid displays scores for "PLAYER 1 (X)", "TIE", and "PLAYER 2 (O)" (or "COMPUTER" in 1P mode).
+It includes a mode toggle button (div.swap) with a user icon (SVG) to switch between 1P and 2P modes. The labels "1P" and "2P" are shown accordingly.
+Game State Overlay:
+The div.restart overlay becomes visible (display: block) when the game ends, allowing the user to restart by clicking the grid.
+2. CSS Styling
+Font: Uses Raleway with a weight of 400, loaded via Google Fonts as specified.
+Background: The body has a solid black background (#000), matching the UI.
+Grid:
+The 3x3 grid is created using floated div.square elements with percentage-based dimensions.
+Grid lines are drawn using borders on the squares (e.g., border-bottom-style: solid for top squares). Borders are white (#fff) and 5px thick (adjusted for smaller screens).
+Each cell has a hover effect (background changes to #333 on focus) and can display 'X' or 'O'.
+Characters:
+'X' is styled using pseudo-elements (:before and :after) to create two rotated lines forming a cross. Normal state is light gray (#999), and winning state is white (#fff).
+'O' is a circle with a thick border, styled similarly for normal (#999) and winning (#fff) states.
+The appearance animation (appear) uses a cubic-bezier timing function for a bouncy effect when 'X' or 'O' is placed.
+Scoreboard:
+Scores and labels are centered using text-align: center.
+Labels and scores use white text (#fff), with Raleway font at 20px for labels and 50px for scores (adjusted for smaller screens).
+Small 'X' and 'O' icons next to player labels are styled similarly to the grid characters but smaller.
+Animations:
+Blinking animation for a tie (border-blink) changes the grid border color, repeating three times over 0.3s.
+Blinking animation for a win (blink) changes the opacity of winning cells, repeating three times.
+The logo disc has a hover animation (neave-anim) and fade effect (fade-anim).
+Icons:
+SVGs are used for the logo, speaker, and user icons. They are white (#fff) and styled to match the UI's minimalistic design.
+3. JavaScript Logic
+Game State:
+A 3x3 array (w) represents the board: 0 for empty, -1 for 'X', and 1 for 'O'.
+Tracks the current player (L: true for 'X', false for 'O').
+Scores (n for 1P mode, i for 2P mode) are maintained for Player 1, Tie, and Player 2.
+Tracks game mode (q: false for 1P, true for 2P).
+Game Flow:
+On cell click (D function), the current player's symbol is placed if the cell is empty.
+In 1P mode, the computer makes a move (C function) after the player's turn with a delay (h = 300ms).
+Checks for a win or tie (x function) after each move.
+Updates scores and triggers animations based on the outcome.
+Allows restarting (I function) by clicking the grid after the game ends.
+Win Condition:
+Checks rows, columns, and diagonals (g array) for three matching symbols (sum of 3 for 'O', -3 for 'X').
+Tie Condition:
+If the board is full (9 moves) and there’s no winner, it’s a tie.
+Computer Move (1P Mode):
+Implements a simple AI (C function):
+First checks for a winning move for itself.
+Then blocks the player’s winning move if possible.
+Otherwise, picks a random empty cell (with some probability to avoid the player's first move).
+Animations:
+CSS animations (blink and border-blink) handle blinking for win/tie states.
+JavaScript triggers these by adding win or tie classes to the board or squares.
+Audio:
+Toggles mute/unmute state (T function) with a speaker button, using local storage to persist the setting.
+Plays sound effects (y function) for moves and game outcomes (simulated here without actual audio).
+4. Event Handling
+Cell Clicks: Each square has ontouchstart and onmousedown events to call D and place 'X' or 'O'.
+Mode Toggle: The scoreboard (div.scores) has a click event to toggle between 1P and 2P modes (M function), resetting the game.
+Mute Button: The mute button has a click event to toggle the mute state (T function) and update the speaker icon.
+Restart: The div.restart overlay has a click event to restart the game (I function) after a win or tie.
+5. Implementation Details
+Libraries: Uses vanilla HTML, CSS, and JavaScript, as specified.
+Assets: Inline SVGs are used for the logo, speaker, and user icons to match the UI.
+Responsive Design:
+Media queries adjust the layout for smaller screens (e.g., 960px, 540px, 350px).
+Uses relative units (e.g., percentages, vw, vh) to ensure the game scales properly.
+Adjusts font sizes, grid dimensions, and margins for different screen sizes.
+Explanation of the Code
+HTML:
+Structured with a container (div.game), header (logo and mute button), 3x3 grid (div.board), and scoreboard (div.scores) with a mode toggle button.
+Uses inline SVGs for icons to match the UI precisely.
+CSS:
+Uses floated elements with borders for the 3x3 grid layout.
+Styles 'X' and 'O' with pseudo-elements and borders, matching the UI's shading for normal and winning states.
+Implements blinking animations for win/tie states using CSS keyframes.
+Ensures a black background, white lines, and gray/white symbols as per the UI.
+JavaScript:
+Manages game state (board, current player, scores, mode) using variables and functions.
+Handles cell clicks, win/tie conditions, and computer moves in 1P mode.
+Updates the UI with scores, turn indicators, and animations.
+Implements mode toggle and mute functionality (simulated audio).
+This implementation provides a fully functional Tic-Tac-Toe game that closely matches the provided UI and functionality, ensuring an engaging experience for your niece.
